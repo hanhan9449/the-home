@@ -8,3 +8,28 @@
   padding-top: 100px;
   padding-bottom: 200px;
 }
+
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+
+.slogan {
+  inset:0;
+  display: flex;
+  &-inner {
+    margin:auto;
+    //font-weight: bold;
+    font-size: 5rem;
+    line-height: calc(5rem * 1.2);
+    color: rgba(63, 68, 73, 0.6);
+    @media screen and (max-width: 500px) {
+      font-size: 2rem;
+      line-height: calc(2rem * 1.2);
+
+    }
+  }
+}
+

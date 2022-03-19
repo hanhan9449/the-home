@@ -1,4 +1,12 @@
+<section class="relative">
+ <div class="absolute slogan">
+   <div class="slogan-inner">
+
+   {{slogan}}
+   </div>
+ </div>
 <img class="banner" src="assets/images/pic0001.jpg"/>
+</section>
 <section class="main">
   <section>当前智能家居中有
     <span>{{(deviceList$ | async)?.length ?? 0 }}</span>
