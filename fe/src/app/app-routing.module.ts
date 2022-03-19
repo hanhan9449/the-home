@@ -5,6 +5,11 @@ import {HomeProComponent} from "./home-pro/home-pro.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {ManageComponent} from "./manage/manage.component";
 import {AboutComponent} from "./about/about.component";
+import {HomeModule} from "./home/home.module";
+import {AppModule} from "./app.module";
+import {AboutModule} from "./about/about.module";
+import {HomeProModule} from "./home-pro/home-pro.module";
+import {ManageModule} from "./manage/manage.module";
 
 export enum RoutePathEnum {
   HOME='home',
@@ -23,7 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), HomeModule, AboutModule, HomeProModule, ManageModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

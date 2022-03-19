@@ -1,1 +1,7 @@
-<p>home works!</p>
+<img class="banner" src="assets/images/pic0001.jpg"/>
+<section class="main">
+  <section>当前智能家居中有
+    <span>{{(deviceList$ | async)?.length ?? 0 }}</span>
+    台设备在线
+  </section>
+</section>
