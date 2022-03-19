@@ -4,7 +4,8 @@ import { config } from "dotenv-defaults";
 config();
 
 export const env = {
-  PORT: process.env.PORT,
+  SERVER_PORT: process.env.SERVER_PORT,
   ADMIN_USERNAME: process.env.ADMIN_USERNAME,
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+  MQTT_BROKER_HOST: process.env.MQTT_BROKER_HOST,
 };
