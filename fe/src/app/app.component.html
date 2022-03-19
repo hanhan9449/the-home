@@ -1,7 +1,10 @@
 <mat-drawer-container [style.display]="'contents'" [hasBackdrop]="true">
-  <mat-drawer-content>
+  <mat-drawer-content class="main">
     <app-header (triggerSidebar)="drawer.toggle()"></app-header>
+    <div class="router-wrapper">
+
     <router-outlet></router-outlet>
+    </div>
     <app-footer></app-footer>
   </mat-drawer-content>
   <mat-drawer #drawer [mode]="'push'">
