@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {RoutePathEnum} from "../app-routing.module";
 
 @Component({
@@ -7,7 +7,8 @@ import {RoutePathEnum} from "../app-routing.module";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  routesList = RoutePathEnum
+  @Output() triggerSidebar = new EventEmitter<void>();
+
 
   constructor() { }
 

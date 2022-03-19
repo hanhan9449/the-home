@@ -1,5 +1,48 @@
 <mat-drawer-container [style.display]="'contents'" [hasBackdrop]="true">
-  <app-header></app-header>
-  <router-outlet></router-outlet>
-  <app-footer></app-footer>
+  <mat-drawer-content>
+    <app-header (triggerSidebar)="drawer.toggle()"></app-header>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </mat-drawer-content>
+  <mat-drawer #drawer [mode]="'push'">
+    <h2
+      class="title"
+    >目录</h2>
+    <mat-list
+      class="list"
+    >
+      <mat-list-item class="list-item" [routerLink]="routesList.HOME"
+                     (click)="drawer.toggle()"
+      >
+        <mat-icon
+          class="icon"
+        >home
+        </mat-icon>
+        <span>首页</span></mat-list-item>
+      <mat-list-item class="list-item" [routerLink]="routesList.HOME_PRO"
+                     (click)="drawer.toggle()"
+      >
+        <mat-icon
+          class="icon"
+        >home
+        </mat-icon>
+        <span>首页-专业版</span></mat-list-item>
+      <mat-list-item class="list-item" [routerLink]="routesList.MANAGE"
+                     (click)="drawer.toggle()"
+      >
+        <mat-icon class="icon">
+          receipt
+        </mat-icon>
+        <span>设备管理</span>
+      </mat-list-item>
+      <mat-list-item class="list-item" [routerLink]="routesList.ABOUT"
+                     (click)="drawer.toggle()"
+      >
+        <mat-icon class="icon">
+          info
+        </mat-icon>
+        <span>关于网页及作者</span>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
 </mat-drawer-container>
