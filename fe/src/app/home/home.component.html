@@ -30,6 +30,10 @@
         <li>天气状况：{{ (weatherInfo$ | async)?.now?.text }} 🌺</li>
       </ul>
     </div>
+
+    <a mat-button [href]="(weatherInfo$ | async)?.fxLink" target="_blank"
+      >查看更多信息</a
+    >
     <!--    <code>{{ weatherInfo$ | async | json }}</code>-->
   </section>
 
