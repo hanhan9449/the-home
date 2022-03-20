@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   deviceList$?: Observable<any[]> = new Observable<any[]>();
   slogan = '';
   weatherInfo$?: Observable<any>;
+  inhouseWeatherInfo$?: Observable<any>;
 
   constructor(
     private deviceInfoService: DeviceInfoService,
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
     );
     this.slogan = this.randomSlogan();
     this.weatherInfo$ = this.getWeatherInfo();
+    this.inhouseWeatherInfo$ = this.getInhouseWeatherInfo();
   }
 
   randomSlogan() {
@@ -87,5 +89,11 @@ export class HomeComponent implements OnInit {
 
   getWeatherInfo() {
     return this.weatherService.getWeatherInfo();
+  }
+
+  getInhouseWeatherInfo() {
+    const name = '0x00158d000709c191';
+
+    return this.deviceInfoService.getDeviceInfo$(name);
   }
 }

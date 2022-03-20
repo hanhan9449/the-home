@@ -32,4 +32,16 @@
     </div>
     <!--    <code>{{ weatherInfo$ | async | json }}</code>-->
   </section>
+
+  <section class="card card1">
+    <h2 class="card-title"><span class="icon"> 🏠</span> 室内气温</h2>
+    <div class="info">
+      <ul>
+        <li>当前温度：{{ (inhouseWeatherInfo$ | async)?.temperature }}℃ 🍉</li>
+        <li>当前湿度：{{ (inhouseWeatherInfo$ | async)?.humidity }}% 🍞</li>
+        <li>当前压强：{{ (inhouseWeatherInfo$ | async)?.pressure }}帕 🥝</li>
+      </ul>
+    </div>
+    <!--    <code>{{ inhouseWeatherInfo$ | async | json }}</code>-->
+  </section>
 </section>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { DeviceInfoService } from './device-info.service';
 
 @Injectable({
   providedIn: 'root',
