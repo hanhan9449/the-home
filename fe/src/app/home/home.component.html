@@ -1,15 +1,35 @@
 <section class="relative">
- <div class="absolute slogan">
-   <div class="slogan-inner">
-
-   {{slogan}}
-   </div>
- </div>
-<img class="banner" src="assets/images/pic0001.jpg"/>
+  <div class="absolute slogan">
+    <div class="slogan-inner">
+      {{ slogan }}
+    </div>
+  </div>
+  <img class="banner" src="assets/images/pic0001.jpg" />
 </section>
 <section class="main">
-  <section>当前智能家居中有
-    <span>{{(deviceList$ | async)?.length ?? 0 }}</span>
-    台设备在线
+  <section class="card card1">
+    <h2 class="card-title"><span class="icon"> 📝 </span> 监控信息</h2>
+    <div class="info">
+      当前智能家居中有
+      <span>{{ (deviceList$ | async)?.length ?? 0 }}</span>
+      台设备在线
+    </div>
+  </section>
+  <section class="card card1">
+    <h2 class="card-title">
+      <span class="icon"> 🌬 </span> 室外气温
+      <i
+        [class]="'qi-' + (weatherInfo$ | async).now?.icon"
+        [style.color]="'dimgray'"
+      ></i>
+    </h2>
+    <div class="info">
+      <ul>
+        <li>当前温度：{{ (weatherInfo$ | async)?.now?.temp }}℃ 🌸</li>
+        <li>当前湿度：{{ (weatherInfo$ | async)?.now?.humidity }}% 🌼</li>
+        <li>天气状况：{{ (weatherInfo$ | async)?.now?.text }} 🌺</li>
+      </ul>
+    </div>
+    <!--    <code>{{ weatherInfo$ | async | json }}</code>-->
   </section>
 </section>
