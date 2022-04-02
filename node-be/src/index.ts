@@ -1,5 +1,4 @@
 import express from "express";
-import { client } from "./mqtt";
 import { defaultSmartHomeService } from "./services";
 import { env } from "./utils/env";
 import cors from "cors";

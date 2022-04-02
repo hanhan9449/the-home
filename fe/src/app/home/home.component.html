@@ -1,7 +1,7 @@
 <section class="relative">
   <div class="absolute slogan">
     <div class="slogan-inner">
-      {{ slogan }}
+      {{ slogan | async }}
     </div>
   </div>
   <img class="banner" src="assets/images/pic0001.jpg" />
@@ -14,6 +14,9 @@
       <span>{{ (deviceList$ | async)?.length ?? 0 }}</span>
       台设备在线
     </div>
+    <section class="actionGroup">
+      <a mat-button (click)="openDeviceListDialog()">查看连接设备信息</a>
+    </section>
   </section>
   <section class="card card1">
     <h2 class="card-title">
@@ -31,9 +34,11 @@
       </ul>
     </div>
 
-    <a mat-button [href]="(weatherInfo$ | async)?.fxLink" target="_blank"
-      >查看更多信息</a
-    >
+    <section class="actionGroup">
+      <a mat-button [href]="(weatherInfo$ | async)?.fxLink" target="_blank"
+        >查看更多信息</a
+      >
+    </section>
     <!--    <code>{{ weatherInfo$ | async | json }}</code>-->
   </section>
 
@@ -46,6 +51,26 @@
         <li>当前压强：{{ (inhouseWeatherInfo$ | async)?.pressure }}帕 🥝</li>
       </ul>
     </div>
+    <section class="actionGroup">
+      <a mat-button>查看历史数据</a>
+    </section>
     <!--    <code>{{ inhouseWeatherInfo$ | async | json }}</code>-->
+  </section>
+
+  <section class="card card1">
+    <h2 class="card-title"><span class="icon">🎥</span>室内监控系统</h2>
+    <div class="info">
+      <ul>
+        <li>
+          监控状态：{{ (humanDetectStatus$ | async) ? "开 🟢" : "关 🔴" }}
+        </li>
+        <li>
+          是否有人：{{ !!(humanDetectInfo$ | async)?.occupancy ? "是" : "否" }}
+        </li>
+      </ul>
+    </div>
+    <section class="actionGroup">
+      <a mat-button (click)="openHumanDetectedListDialog()">查看历史数据</a>
+    </section>
   </section>
 </section>

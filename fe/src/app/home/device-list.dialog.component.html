@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>智能家居设备列表</h2>
+<mat-dialog-content class="mat-typography" [style.max-width]="'100%'">
+  <mat-list>
+    <mat-list-item *ngFor="let item of deviceList$ | async">
+      <div>
+        <div [style.display]="'flex'">
+          <div [style.width]="'400px'">{{ item?.model_id }}</div>
+          <a mat-button>展开</a>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>关闭</button>
+</mat-dialog-actions>

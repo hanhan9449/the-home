@@ -1,9 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceInfoService } from '../device-info.service';
-import { Observable, timer } from 'rxjs';
-import { map, repeatWhen, throttleTime } from 'rxjs/operators';
+import { from, Observable, of, timer } from 'rxjs';
+import {
+  filter,
+  map,
+  repeatWhen,
+  switchMap,
+  take,
+  takeLast,
+  tap,
+  throttleTime,
+  timeInterval,
+} from 'rxjs/operators';
 import { WeatherService } from '../weather.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeviceListDiaLog } from './device-list.dialog.component';
+import { HumanDetectDiaLog } from './human-detect.dialog.component';
 
+export interface HumanDetectedInfo {
+  timestamp: number;
+}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,24 +27,43 @@ import { WeatherService } from '../weather.service';
 })
 export class HomeComponent implements OnInit {
   deviceList$?: Observable<any[]> = new Observable<any[]>();
-  slogan = '';
+  slogan?: Observable<string>;
   weatherInfo$?: Observable<any>;
   inhouseWeatherInfo$?: Observable<any>;
+  humanDetectStatus$?: Observable<boolean>;
+  humanDetectInfo$?: Observable<any>;
+  humanDetectedInfo$?: Observable<HumanDetectedInfo[]>;
 
   constructor(
     private deviceInfoService: DeviceInfoService,
-    private weatherService: WeatherService
+    private weatherService: WeatherService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     const next$ = this.deviceInfoService.getDeviceList$();
     this.deviceList$ = next$.pipe(
-      repeatWhen(() => timer(60 * 1000)),
-      map((a) => a.filter((b) => b?.type === 'EndDevice'))
+      repeatWhen(() => timer(60 * 1000 * 5, 60 * 1000 * 5)),
+      tap((a) => console.debug(a)),
+      map((a) => a.filter((b) => b?.type !== 'Coordinator'))
     );
     this.slogan = this.randomSlogan();
     this.weatherInfo$ = this.getWeatherInfo();
-    this.inhouseWeatherInfo$ = this.getInhouseWeatherInfo();
+    this.inhouseWeatherInfo$ = this.getInhouseWeatherInfo().pipe(
+      repeatWhen((a) => timer(3000, 3000))
+    );
+    this.humanDetectStatus$ = this.getHumanDetectStatus().pipe(
+      repeatWhen((a) => timer(3000, 3000))
+    );
+    this.humanDetectInfo$ = this.getHumanDetectInfo$().pipe(
+      repeatWhen((a) => timer(3000, 3000))
+    );
+    this.humanDetectedInfo$ = this.humanDetectStatus$.pipe(
+      tap((a) => console.debug(a)),
+      filter((a) => a),
+      switchMap(() => this.humanDetectInfo$!),
+      tap((a) => console.debug('humanDetectedInfo$', a))
+    );
   }
 
   randomSlogan() {
@@ -84,7 +119,7 @@ export class HomeComponent implements OnInit {
       '生活，让您更加闪耀。',
       '也许那是她与生俱来，也许那是因为生活。',
     ];
-    return list[~~(list.length * Math.random())];
+    return from(list).pipe(take(~~(list.length * Math.random())), takeLast(1));
   }
 
   getWeatherInfo() {
@@ -95,5 +130,35 @@ export class HomeComponent implements OnInit {
     const name = '0x00158d000709c191';
 
     return this.deviceInfoService.getDeviceInfo$(name);
+  }
+
+  getHumanDetectStatus() {
+    const name = '0x00124b001cd6f148';
+
+    return this.deviceInfoService
+      .getDeviceInfo$(name)
+      .pipe(map((a) => !!a?.led));
+  }
+
+  getHumanDetectInfo$() {
+    const name = '0x00158d00075f4c25';
+
+    return this.deviceInfoService.getDeviceInfo$(name);
+  }
+
+  openDeviceListDialog() {
+    const dialogRef = this.dialog.open(DeviceListDiaLog, {
+      data: {
+        deviceList$: this.deviceList$,
+      },
+    });
+  }
+
+  openHumanDetectedListDialog() {
+    const dialogRef = this.dialog.open(HumanDetectDiaLog, {
+      data: {
+        messages$: this.humanDetectedInfo$,
+      },
+    });
   }
 }
